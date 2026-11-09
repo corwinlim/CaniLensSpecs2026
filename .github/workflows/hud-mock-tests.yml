@@ -1,0 +1,32 @@
+name: CaniLens HUD mock tests
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'Assets/CaniLensHUDBuild50.js'
+      - 'tests/test_build50.js'
+      - '.github/workflows/hud-mock-tests.yml'
+  pull_request:
+    paths:
+      - 'Assets/CaniLensHUDBuild50.js'
+      - 'tests/test_build50.js'
+      - '.github/workflows/hud-mock-tests.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  unit-test:
+    name: Node.js mock state-machine tests (NOT native Lens Studio)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run 13 HUD mock tests
+        run: node tests/test_build50.js
